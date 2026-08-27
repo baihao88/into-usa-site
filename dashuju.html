@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<meta content="#020817" name="theme-color"/>
+<meta content="企业入站营销实时数据大屏" name="description"/>
+<title>数据大屏</title>
+<script>
+        // 新版请求与订阅功能沿用现有站点识别约定，不在大屏内部重复生成网站上下文。
+        window.websiteId = "560425";
+        window.website_id = window.websiteId;
+        if (window.websiteId) {
+            try {
+                window.localStorage.setItem('websiteId', window.websiteId);
+                window.localStorage.setItem('website_id', window.websiteId);
+            } catch (error) {
+                // 隐私模式可能禁用 localStorage；站点 ID 仍可从 window 变量读取。
+            }
+        }
+    </script>
+</head>
+<body>
+<script>
+// URL 含 debug=1 时加载 eruda 调试面板
+if (new URLSearchParams(location.search).get('debug') === '1') {
+    (function () {
+        var script = document.createElement('script');
+        script.src = 'https://cdn.jsdelivr.net/npm/eruda';
+        document.body.appendChild(script);
+        script.onload = function () { eruda.init(); };
+    })();
+}
+</script>
+<!-- 入站营销数据大屏：可嵌入现有页面 body 的纯 HTML 片段 -->
+<script>(function () {
+        function getQueryParam(name) {
+          var matched = String(location.search || '').match(new RegExp('(?:^|[?&])' + name + '=([^&#]*)', 'i'));
+          if (!matched) return '';
+          try {
+            return decodeURIComponent(matched[1].replace(/\+/g, ' '));
+          } catch (error) {
+            return matched[1];
+          }
+        }
+        var requestedDevice = String(getQueryParam('device_type') || getQueryParam('_device_type')).toLowerCase();
+        var isForcedMobile = requestedDevice === 'mobile' || requestedDevice === 'phone';
+        var isForcedDesktop = requestedDevice === 'pc' || requestedDevice === 'desktop';
+        var isPhoneUserAgent = /(?:iphone|ipod|windows phone|iemobile|blackberry|bb10|opera mini|opera mobi|android.+mobile|mobile.+android)/i.test(navigator.userAgent);
+        document.documentElement.dataset.device = isForcedMobile || (!isForcedDesktop && isPhoneUserAgent)
+          ? 'phone'
+          : 'desktop';
+      })();
+      (function () {
+        var root = document.documentElement;
+        var flex = document.createElement('div');
+        var first = document.createElement('i');
+        var second = document.createElement('i');
+        flex.style.cssText = 'position:absolute;visibility:hidden;display:flex;flex-direction:column;row-gap:1px;';
+        first.style.height = '0';
+        second.style.height = '0';
+        flex.appendChild(first);
+        flex.appendChild(second);
+        root.appendChild(flex);
+        root.classList.add(flex.scrollHeight === 1 ? 'has-flex-gap' : 'no-flex-gap');
+        root.removeChild(flex);
+      })();
+      document.documentElement.classList.add('has-boot-loader');</script>
+<style>:root {
+        color-scheme: dark;
+        background: #020817;
+      }
+
+      html,
+      body,
+      #root {
+        width: 100%;
+        height: 100%;
+        margin: 0;
+        overflow: hidden;
+        background: #020817;
+      }
+
+      .pre-react-loader {
+        position: fixed;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        z-index: 100;
+        display: grid;
+        place-items: center;
+        background: #010713;
+        pointer-events: none;
+        opacity: 1;
+        visibility: visible;
+        transition:
+          opacity 120ms cubic-bezier(0.2, 0.72, 0.25, 1),
+          visibility 0s linear 0s;
+      }
+
+      .pre-react-loader.is-leaving {
+        opacity: 0;
+        visibility: hidden;
+        transition:
+          opacity 120ms cubic-bezier(0.2, 0.72, 0.25, 1),
+          visibility 0s linear 120ms;
+      }</style>
+<link crossorigin="" href="/visual-editor-new/dist/big-data-dashboard/embed/assets/big-data-dashboard-B5pKnogn.css" rel="stylesheet"/>
+<div aria-hidden="true" class="pre-react-loader" id="dashboard-boot-loader"></div>
+<div id="root"></div>
+<script crossorigin="" src="/visual-editor-new/dist/big-data-dashboard/embed/assets/dashboard-Dw__UHJD.js" type="module"></script>
+</body>
+</html>

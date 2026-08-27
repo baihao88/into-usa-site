@@ -1,0 +1,227 @@
+/**
+ * GwShare 通用分享组件样式
+ * 不依赖任何第三方 UI 框架
+ * 默认皮肤对齐旧版 horizontal_grey：浅灰无边框，hover 灰紫/品牌色
+ */
+
+/* 分享容器 */
+.gw-share {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+/* 分享图标按钮 —— 对齐旧版 #b2bac2 无描边 */
+.gw-share .gw-share-icon {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  margin: 4px;
+  font-size: 20px;
+  border-radius: 50%;
+  border: none;
+  color: #b2bac2;
+  background: transparent;
+  text-decoration: none;
+  text-align: center;
+  vertical-align: middle;
+  transition: background 0.6s ease-out 0s, color 0.6s ease-out 0s;
+  cursor: pointer;
+  outline: none;
+}
+
+.gw-share .gw-share-icon:hover,
+.gw-share .gw-share-icon:focus {
+  color: #fff;
+  background: #666A8C;
+  text-decoration: none;
+}
+
+.gw-share .gw-share-icon i,
+.gw-share .gw-share-icon span {
+  font-style: normal;
+  line-height: 1;
+}
+
+/* 文字型图标（知乎/头条/搜狐） */
+.gw-share .gw-share-icon .gw-share-text {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+}
+
+/* X 用 SVG，避免字母在 hover 填色后视觉偏离中心 */
+.gw-share .icon-x .gw-share-x {
+  display: block;
+  width: 14px;
+  height: 14px;
+  flex-shrink: 0;
+}
+
+/* 各平台 hover 品牌色 */
+.gw-share .icon-qzone:hover,
+.gw-share .icon-qzone:focus { background: #FDBE3D; }
+
+.gw-share .icon-qq:hover,
+.gw-share .icon-qq:focus { background: #56b6e7; }
+
+.gw-share .icon-weibo:hover,
+.gw-share .icon-weibo:focus { background: #ff763b; }
+
+.gw-share .icon-wechat:hover,
+.gw-share .icon-wechat:focus { background: #7bc549; }
+
+.gw-share .icon-facebook:hover,
+.gw-share .icon-facebook:focus { background: #44619D; }
+
+.gw-share .icon-twitter:hover,
+.gw-share .icon-twitter:focus,
+.gw-share .icon-x:hover,
+.gw-share .icon-x:focus { background: #000000; }
+
+.gw-share .icon-linkedin:hover,
+.gw-share .icon-linkedin:focus { background: #0077B5; }
+
+.gw-share .icon-whatsapp:hover,
+.gw-share .icon-whatsapp:focus { background: #25D366; }
+
+.gw-share .icon-copy:hover,
+.gw-share .icon-copy:focus { background: #666A8C; }
+
+.gw-share .icon-poster:hover,
+.gw-share .icon-poster:focus { background: #666A8C; }
+
+.gw-share .icon-more:hover,
+.gw-share .icon-more:focus { background: #999999; }
+
+/* 微信二维码弹窗 */
+.gw-wechat-qrcode {
+  position: absolute;
+  z-index: 99;
+  top: 50%;
+  left: calc(100% + 10px);
+  transform: translateY(-50%);
+  width: 180px;
+  padding: 12px;
+  background-color: #fff;
+  border: 1px solid #eee;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.15);
+  text-align: center;
+  color: #666;
+  font-size: 12px;
+}
+
+.gw-wechat-qrcode h4 {
+  margin: 0 0 8px;
+  font-size: 13px;
+  font-weight: normal;
+  color: #777;
+}
+
+.gw-wechat-qrcode img {
+  display: block;
+  width: 120px;
+  height: 120px;
+  margin: 0 auto 8px;
+}
+
+.gw-wechat-qrcode p {
+  margin: 0;
+  line-height: 1.4;
+}
+
+.gw-wechat-qrcode::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: -8px;
+  margin-top: -6px;
+  width: 0;
+  height: 0;
+  border-width: 6px 8px 6px 0;
+  border-style: solid;
+  border-color: transparent #fff transparent transparent;
+}
+
+/* 适配 share-panel 旧结构 */
+.share-panel {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.share-panel .gw-share {
+  display: flex;
+}
+
+/* 海报按钮使用项目现有 iconfont */
+.gw-share .icon-poster .iconfont-copyright.share-poster {
+  font-size: 24px;
+}
+
+.gw-share .icon-poster .iconfont-copyright.share-poster::before {
+  content: '\e60c';
+}
+
+/* 海报按钮带文字标签 */
+.gw-share .gw-share-poster-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+/* 横向排版时去掉海报分享文字标签，只保留图标 */
+.share-panel.horizontal .gw-share-poster-label {
+  display: none;
+}
+
+/* 对齐旧版 .icon-title：固定宽换行成「海报 / 分享」两行 */
+.gw-share .gw-share-poster-label {
+  display: block;
+  width: 29px;
+  margin-bottom: 5px;
+  font-size: 10px;
+  font-weight: 500;
+  text-align: center;
+  line-height: 13px;
+  color: #b2bac2;
+}
+
+.gw-share .gw-share-poster-wrapper:hover .gw-share-icon,
+.gw-share .gw-share-poster-wrapper:focus .gw-share-icon {
+  color: #fff;
+  background: #666A8C;
+}
+
+/* 无图标的平台字号微调 */
+.gw-share .icon-zhihu .gw-share-text,
+.gw-share .icon-toutiao .gw-share-text,
+.gw-share .icon-sohu .gw-share-text {
+  font-size: 13px;
+}
+
+/* 移动端适配 */
+@media (max-width: 768px) {
+  .gw-share .gw-share-icon {
+    width: 36px;
+    height: 36px;
+    font-size: 22px;
+    margin: 5px;
+  }
+
+  .gw-share .gw-share-icon .gw-share-text {
+    font-size: 15px;
+  }
+}
