@@ -2920,13 +2920,16 @@ font-family:微软雅黑;font-size:18px;color:rgb(238, 238, 238);font-weight:bol
 <!-- 任意html代码 -->
 <style>
   div[name='顶部导航']{
-    transition: all 0.6s ease;
+    transition: all 0.4s ease;
     overflow:visible !important;
+  }
+  div[name='顶部导航'] .gw-nav-cont>a:not('.active'){
+    color:#fff !important;
   }
   @media (min-width: 768px){
     div[name='顶部导航']{
       position: fixed !important;
-      top: 30px;
+      top: 0;
       left: 0;
       right: 0;
       margin: 0 auto;
@@ -2939,31 +2942,29 @@ font-family:微软雅黑;font-size:18px;color:rgb(238, 238, 238);font-weight:bol
 <script>
   $(function () {
     var $nav = $("div[name='顶部导航']");
-    function syncNav(){
-      if (window.innerWidth < 768) return; // 移动端不固定、不隐藏，随页面正常滚动
-      if ($(document).scrollTop() <= 0) {
-        // 回到顶部：显示导航，浮于轮播图上（深色半透明）
-        $nav.css({
-          "opacity":"1",
-          "transform":"translateY(0)",
-          "pointer-events":"auto",
-          "background-color":"rgba(0,0,0,0.4)",
-          "top":"30px",
-          "box-shadow":"none"
-        });
-        $nav.find(".gw-nav-cont>a:not('.active')").css("color","#fff");
-        $nav.find(".gw-browse-container-content >.images-component img").attr("src","vendor/uploadfile.ltdcdn.com/uploadfilev2/image/0/560/425/2024-10/17292437553600.png");
-      } else {
-        // 下拉：隐藏导航
-        $nav.css({
-          "opacity":"0",
-          "transform":"translateY(-100%)",
-          "pointer-events":"none"
-        });
-      }
+    var lastScroll = 0;
+    // 确保 logo 使用本地深色版本（背景始终为深色，无需切换）
+    $nav.find(".gw-browse-container-content >.images-component img").attr("src","vendor/uploadfile.ltdcdn.com/uploadfilev2/image/0/560/425/2024-10/17292437553600.png");
+    function showNav(){
+      $nav.css({"opacity":"1","transform":"translateY(0)","pointer-events":"auto"});
     }
-    $(window).scroll(syncNav);
-    syncNav();
+    function hideNav(){
+      $nav.css({"opacity":"0","transform":"translateY(-100%)","pointer-events":"none"});
+    }
+    function update(){
+      var st = $(document).scrollTop();
+      if (window.innerWidth < 768) { lastScroll = st; return; } // 移动端不固定、不隐藏
+      if (st <= 0) {
+        showNav();              // 顶部：始终显示
+      } else if (st > lastScroll) {
+        hideNav();              // 下滑：隐藏
+      } else {
+        showNav();              // 上滑：显示
+      }
+      lastScroll = st;
+    }
+    $(window).scroll(update);
+    update();
   })
 </script>
 <script>
