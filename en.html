@@ -776,7 +776,7 @@
     }
 </style>
 <!--自定义html目前不适用 2019 11 04-->
-<div class="gw-browse-module" data-anchor-id="anchor-1500339852730-3532" data-fixed-position="" data-full="" id="gw-module-26228167" name="顶部导航" style="background-color:rgba(0, 0, 0, 0.4);background-repeat:repeat;background-size:auto;">
+<div class="gw-browse-module fixed-top" data-anchor-id="anchor-1500339852730-3532" data-fixed-position="" data-full="" id="gw-module-26228167" name="顶部导航" style="background-color:rgba(0, 0, 0, 0.4);background-repeat:repeat;background-size:auto;">
 <style>
         #gw-module-26228167.module-bg-card {
             --gw-module-content-max-width: 1200px;
@@ -2900,20 +2900,47 @@ font-family:微软雅黑;font-size:18px;color:rgb(238, 238, 238);font-weight:bol
     transition: all 0.6s ease;
     overflow:visible !important;
   }
+  @media (min-width: 768px){
+    div[name='顶部导航']{
+      position: fixed !important;
+      top: 30px;
+      left: 0;
+      right: 0;
+      margin: 0 auto;
+      width: 1720px;
+      max-width: 1720px;
+      z-index: 999;
+    }
+  }
 </style>
 <script>
   $(function () {
-    $(window).scroll(function () {
+    var $nav = $("div[name='顶部导航']");
+    function syncNav(){
+      if (window.innerWidth < 768) return; // 移动端不固定、不隐藏，随页面正常滚动
       if ($(document).scrollTop() <= 0) {
-        $("div[name='顶部导航']").css({"background-color":"rgba(0,0,0,0)","top":"30px","box-shadow":"none"})
-        $("div[name='顶部导航'] .gw-nav-cont>a:not('.active')").css("color","#fff")
-        $("div[name='顶部导航'] .gw-browse-container-content >.images-component img").attr("src","      vendor/uploadfile.ltdcdn.com/uploadfilev2/image/0/560/425/2024-10/17292437553600.png")
-      }else{
-        $("div[name='顶部导航']").css({"background-color":"#fff","top":"0","box-shadow":"0 0 8px rgb(0,0,0,.1)"})
-        $("div[name='顶部导航'] .gw-nav-cont>a:not('.active')").css("color","#666")
-        $("div[name='顶部导航'] .gw-browse-container-content >.images-component img").attr("src","       https://static.ltd.com/uploadfilev2/image/0/560/425/2024-10/17292438641042.png")
+        // 回到顶部：显示导航，浮于轮播图上（深色半透明）
+        $nav.css({
+          "opacity":"1",
+          "transform":"translateY(0)",
+          "pointer-events":"auto",
+          "background-color":"rgba(0,0,0,0.4)",
+          "top":"30px",
+          "box-shadow":"none"
+        });
+        $nav.find(".gw-nav-cont>a:not('.active')").css("color","#fff");
+        $nav.find(".gw-browse-container-content >.images-component img").attr("src","vendor/uploadfile.ltdcdn.com/uploadfilev2/image/0/560/425/2024-10/17292437553600.png");
+      } else {
+        // 下拉：隐藏导航
+        $nav.css({
+          "opacity":"0",
+          "transform":"translateY(-100%)",
+          "pointer-events":"none"
+        });
       }
-    })
+    }
+    $(window).scroll(syncNav);
+    syncNav();
   })
 </script>
 <script>
